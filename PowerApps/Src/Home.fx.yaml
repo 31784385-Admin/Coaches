@@ -1,0 +1,140 @@
+Home As screen:
+
+    ListBox1 As listbox:
+        Height: =642
+        Items: =Coaches
+        SelectMultiple: =false
+        X: =36
+        Y: =83
+        ZIndex: =1
+
+    dtCoachees As dataTable.datatable:
+        BorderStyle: =BorderStyle.Solid
+        DisplayMode: =DisplayMode.Edit
+        Fill: =RGBA(0, 0, 0, 0)
+        Height: =640
+        Items: |-
+            =Sort(
+                Filter(
+                    Coachees,
+                    Or(
+                        Coach = ListBox1.Selected.Coach.Email,
+                        IsBlank(ListBox1.Selected)
+                    ),
+                    Or(
+                        StartsWith(
+                            Title,
+                            txtStudent.Text
+                        ),
+                        IsBlank(txtStudent.Text)
+                    ),
+                    Or(
+                        Status.Value in cmbStatus.SelectedItems,
+                        IsBlank(cmbStatus.SelectedItems)
+                    )
+                ),
+                ID,
+                If(
+                    varSort,
+                    SortOrder.Ascending,
+                    SortOrder.Descending
+                )
+            )
+        Width: =956
+        X: =375
+        Y: =83
+        ZIndex: =2
+
+        Title_Column2 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Title"
+            FieldName: ="Title"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =1
+            Text: =ThisItem.Title
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+        Number_Column1 As dataTableColumn.numberColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Number" & If(varSort, "⬆👆", "👇")
+            FieldName: ="field_1"
+            FieldVariantName: ="numberColumn"
+            Height: =Parent.Height
+            IsHyperlink: =false
+            LayoutHeight: =Parent.Height
+            OnSelect: =
+            Order: =2
+            Text: =ThisItem.Number
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =2
+
+        Status_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Status"
+            FieldName: ="field_2"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =3
+            Text: =ThisItem.Status.Value
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =3
+
+        Coach_Column2 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Coach"
+            FieldName: ="field_3"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =4
+            Text: =ThisItem.Coach
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =4
+
+    txtStudent As text:
+        Default: =
+        Width: =210
+        X: =375
+        Y: =26
+        ZIndex: =3
+
+    Button1 As button:
+        OnSelect: =Set(varSort, !varSort)
+        Text: ="Sort"
+        Width: =91
+        X: =606
+        Y: =26
+        ZIndex: =5
+
+    btnReset As button:
+        OnSelect: |-
+            =Reset(ListBox1);
+            Reset(cmbStatus);
+            Reset(txtStudent)
+        Text: ="Reset"
+        X: =36
+        Y: =26
+        ZIndex: =6
+
+    cmbStatus As combobox:
+        DisplayFields: =["Value"]
+        IsSearchable: =false
+        Items: =Choices(Coachees.Status)
+        SearchFields: =["Value"]
+        SearchItems: =[]
+        X: =721
+        Y: =26
+        ZIndex: =7
+

@@ -1,0 +1,31 @@
+{
+  "913e1ca1-ad60-4b7a-bcf9-b86de8a083a6": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1610-greyhound-localization-RelayFix/1.0.1610.3091/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline"
+    },
+    "datasets": {
+      "https://m365x31784385.sharepoint.com/sites/Coaching": {
+        "dataSources": {
+          "Coachees": {
+            "tableName": "288c5845-34a4-4837-bb20-977ef5c3fcb1"
+          },
+          "Coaches": {
+            "tableName": "21bbf6b0-cc4e-478c-b200-3b5260862038"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Coaches",
+      "Coachees"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "913e1ca1-ad60-4b7a-bcf9-b86de8a083a6"
+  }
+}
