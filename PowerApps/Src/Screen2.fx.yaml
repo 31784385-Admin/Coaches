@@ -1,0 +1,42 @@
+Screen2 As screen:
+
+    DataTable2 As dataTable.datatable:
+        BorderStyle: =BorderStyle.Solid
+        DisplayMode: =DisplayMode.Edit
+        Fill: =RGBA(0, 0, 0, 0)
+        Height: =726
+        Items: =Coaches
+        Width: =1303
+        X: =40
+        Y: =40
+        ZIndex: =1
+
+        Title_Column3 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Title"
+            FieldName: ="Title"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =1
+            Text: =ThisItem.Title
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+        Coach_Column3 As dataTableColumn.textualColumn:
+            AutoWidth: =false
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Coach"
+            FieldName: ="Coach"
+            FieldVariantName: ="textualColumn"
+            Height: =692
+            LayoutHeight: =Parent.Height
+            Order: =2
+            Text: =ThisItem.Coach.DisplayName
+            Width: =597
+            X: =0
+            Y: =0
+            ZIndex: =2
+
