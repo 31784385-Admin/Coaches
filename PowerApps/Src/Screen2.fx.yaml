@@ -1,11 +1,20 @@
 Screen2 As screen:
+    Fill: =RGBA(255,255,255,1)
+    LoadingSpinnerColor: =RGBA(211, 66, 9, 1)
 
     DataTable2 As dataTable.datatable:
+        BorderColor: =RGBA(131, 24, 75, 1)
         BorderStyle: =BorderStyle.Solid
         DisplayMode: =DisplayMode.Edit
         Fill: =RGBA(0, 0, 0, 0)
+        HeadingFill: =RGBA(211, 66, 9, 1)
         Height: =726
+        HoverFill: =RGBA(255, 211, 205, .2)
         Items: =Coaches
+        PrimaryColor1: =RGBA(211, 66, 9, 1)
+        PrimaryColor2: =RGBA(131, 24, 75, 1)
+        PrimaryColor3: =RGBA(255, 211, 205, 1)
+        SelectedFill: =RGBA(211, 66, 9, .2)
         Width: =1303
         X: =40
         Y: =40

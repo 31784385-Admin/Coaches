@@ -1,25 +1,86 @@
 Home As screen:
+    Fill: =RGBA(255,255,255,1)
+    LoadingSpinnerColor: =RGBA(211, 66, 9, 1)
 
-    ListBox1 As listbox:
-        Height: =642
+    "Gallery1 As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver4.0'":
+        Default: ={}
+        Height: =619
         Items: =Coaches
-        SelectMultiple: =false
-        X: =36
-        Y: =83
+        Layout: =Layout.Vertical
+        TemplateFill: =If(ThisItem.IsSelected, LightGray, Transparent)
+        TemplatePadding: =0
+        TemplateSize: =Min(104, Self.Height - 60)
+        Width: =369
+        X: =6
+        Y: =129
         ZIndex: =1
 
+        Title3 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Title
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            X: =32
+            Y: =16
+            ZIndex: =1
+
+        Subtitle3 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Coach.DisplayName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - 104
+            X: =32
+            Y: =Title3.Y + Title3.Height + 4
+            ZIndex: =2
+
+        NextArrow3 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Height: =60
+            Icon: =Icon.ChevronRight
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="View item details"
+            Width: =60
+            X: =Parent.TemplateWidth - Self.Width - 5
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =3
+
+        Separator3 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =4
+
     dtCoachees As dataTable.datatable:
+        BorderColor: =RGBA(131, 24, 75, 1)
         BorderStyle: =BorderStyle.Solid
         DisplayMode: =DisplayMode.Edit
         Fill: =RGBA(0, 0, 0, 0)
+        HeadingFill: =RGBA(211, 66, 9, 1)
         Height: =640
+        HoverFill: =RGBA(255, 211, 205, .2)
         Items: |-
-            =Sort(
+            =SortByColumns(
                 Filter(
                     Coachees,
                     Or(
-                        Coach = ListBox1.Selected.Coach.Email,
-                        IsBlank(ListBox1.Selected)
+                        Coach = Gallery1.Selected.Coach.Email,
+                        IsBlank(Gallery1.Selected)
                     ),
                     Or(
                         StartsWith(
@@ -29,20 +90,24 @@ Home As screen:
                         IsBlank(txtStudent.Text)
                     ),
                     Or(
-                        Status.Value in cmbStatus.SelectedItems,
-                        IsBlank(cmbStatus.SelectedItems)
+                        Status.Value = cmbStatus.Selected.Value,
+                        IsBlank(cmbStatus.Selected)
                     )
                 ),
-                ID,
+                varSortColumn,
                 If(
                     varSort,
                     SortOrder.Ascending,
                     SortOrder.Descending
                 )
             )
+        PrimaryColor1: =RGBA(211, 66, 9, 1)
+        PrimaryColor2: =RGBA(131, 24, 75, 1)
+        PrimaryColor3: =RGBA(255, 211, 205, 1)
+        SelectedFill: =RGBA(211, 66, 9, .2)
         Width: =956
         X: =375
-        Y: =83
+        Y: =85
         ZIndex: =2
 
         Title_Column2 As dataTableColumn.textualColumn:
@@ -52,28 +117,12 @@ Home As screen:
             FieldVariantName: ="textualColumn"
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
-            Order: =1
+            Order: =2
             Text: =ThisItem.Title
             Width: =100
             X: =0
             Y: =0
             ZIndex: =1
-
-        Number_Column1 As dataTableColumn.numberColumn:
-            DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Number" & If(varSort, "⬆👆", "👇")
-            FieldName: ="field_1"
-            FieldVariantName: ="numberColumn"
-            Height: =Parent.Height
-            IsHyperlink: =false
-            LayoutHeight: =Parent.Height
-            OnSelect: =
-            Order: =2
-            Text: =ThisItem.Number
-            Width: =100
-            X: =0
-            Y: =0
-            ZIndex: =2
 
         Status_Column1 As dataTableColumn.textualColumn:
             DisplayMode: =DisplayMode.Edit
@@ -82,7 +131,7 @@ Home As screen:
             FieldVariantName: ="textualColumn"
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
-            Order: =3
+            Order: =4
             Text: =ThisItem.Status.Value
             Width: =100
             X: =0
@@ -91,36 +140,62 @@ Home As screen:
 
         Coach_Column2 As dataTableColumn.textualColumn:
             DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Coach"
+            FieldDisplayName: ="Coach" & If(varSortColumn = "field_3", If(varSort, "👆", "👇"), "")
             FieldName: ="field_3"
             FieldVariantName: ="textualColumn"
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
-            Order: =4
+            Order: =5
             Text: =ThisItem.Coach
             Width: =100
-            X: =0
+            X: =719
             Y: =0
             ZIndex: =4
 
+        ID_Column1 As dataTableColumn.numberColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="ID" & If(varSortColumn = "ID", If(varSort, "👆", "👇"), "")
+            FieldName: ="ID"
+            FieldVariantName: ="numberColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =1
+            Text: =ThisItem.ID
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =5
+
     txtStudent As text:
+        BorderColor: =RGBA(131, 24, 75, 1)
         Default: =
+        HoverBorderColor: =RGBA(131, 24, 75, 1)
+        HoverFill: =RGBA(255, 211, 205, 1)
         Width: =210
         X: =375
         Y: =26
         ZIndex: =3
 
     Button1 As button:
-        OnSelect: =Set(varSort, !varSort)
-        Text: ="Sort"
-        Width: =91
-        X: =606
+        Fill: =RGBA(211, 66, 9, 1)
+        Height: =38
+        HoverFill: =ColorFade(RGBA(211, 66, 9, 1), -20%)
+        OnSelect: |-
+            =Set(varSort, !varSort);
+            Set(varSortColumn, "ID")
+        Text: |-
+            ="ID
+            "
+        Width: =174
+        X: =622
         Y: =26
         ZIndex: =5
 
     btnReset As button:
+        Fill: =RGBA(211, 66, 9, 1)
+        HoverFill: =ColorFade(RGBA(211, 66, 9, 1), -20%)
         OnSelect: |-
-            =Reset(ListBox1);
+            =Reset(Gallery1);
             Reset(cmbStatus);
             Reset(txtStudent)
         Text: ="Reset"
@@ -129,12 +204,34 @@ Home As screen:
         ZIndex: =6
 
     cmbStatus As combobox:
+        BorderColor: =RGBA(131, 24, 75, 1)
+        ChevronBackground: =RGBA(211, 66, 9, 1)
+        ChevronHoverBackground: =ColorFade(RGBA(211, 66, 9, 1), -20%)
         DisplayFields: =["Value"]
+        HoverFill: =RGBA(255, 211, 205, 1)
         IsSearchable: =false
         Items: =Choices(Coachees.Status)
+        PressedFill: =RGBA(131, 24, 75, 1)
         SearchFields: =["Value"]
         SearchItems: =[]
-        X: =721
+        SelectionFill: =RGBA(211, 66, 9, 1)
+        SelectMultiple: =false
+        X: =987
         Y: =26
         ZIndex: =7
+
+    Button1_1 As button:
+        Fill: =RGBA(211, 66, 9, 1)
+        Height: =35
+        HoverFill: =ColorFade(RGBA(211, 66, 9, 1), -20%)
+        OnSelect: |-
+            =Set(varSort, !varSort);
+            Set(varSortColumn, "field_3")
+        Text: |-
+            ="Coach
+            "
+        Width: =140
+        X: =810
+        Y: =28
+        ZIndex: =8
 
